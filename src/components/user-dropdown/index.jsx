@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Anchor from "@ui/anchor";
 
-const UserDropdown = () => (
+const UserDropdown = (props) => (
     <div className="icon-box">
         <Anchor path="/author">
             <Image
@@ -15,10 +15,10 @@ const UserDropdown = () => (
         <div className="rn-dropdown">
             <div className="rn-inner-top">
                 <h4 className="title">
-                    <Anchor path="/product">Christopher William</Anchor>
+                    <Anchor path="/product">{props.account}</Anchor>
                 </h4>
                 <span>
-                    <Anchor path="/product">Set Display Name</Anchor>
+                    <Anchor path="/product">{props.balance}</Anchor>
                 </span>
             </div>
             <div className="rn-product-inner">

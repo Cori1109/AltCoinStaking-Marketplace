@@ -47,14 +47,6 @@ const TopBarArea = () => {
                             </Anchor>
                         </div>
                     </div>
-                    <div className="setting-option rn-icon-list notification-badge">
-                        <div className="icon-box">
-                            <Anchor path="/activity">
-                                <i className="feather-bell" />
-                                <span className="badge">2</span>
-                            </Anchor>
-                        </div>
-                    </div>
                     <div className="setting-option header-btn">
                         <div className="icon-box">
                             <Button

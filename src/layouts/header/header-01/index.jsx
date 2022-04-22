@@ -1,6 +1,7 @@
+import { useState } from "react";
 import PropTypes from "prop-types";
 import clsx from "clsx";
-import { useMoralis } from "react-moralis";
+import { useEthers, useEtherBalance } from "@usedapp/core";
 import Logo from "@components/logo";
 import MainMenu from "@components/menu/main-menu";
 import MobileMenu from "@components/menu/mobile-menu";
@@ -9,17 +10,48 @@ import FlyoutSearchForm from "@components/search-form/layout-02";
 import UserDropdown from "@components/user-dropdown";
 import ColorSwitcher from "@components/color-switcher";
 import BurgerButton from "@ui/burger-button";
-import Anchor from "@ui/anchor";
 import Button from "@ui/button";
 import { useOffcanvas, useSticky, useFlyoutSearch } from "@hooks";
+import { Constants } from "../../../config/constants";
 import headerData from "../../../data/general/header-01.json";
 import menuData from "../../../data/general/menu-01.json";
+import Web3 from "web3";
 
 const Header = ({ className }) => {
     const sticky = useSticky();
+    const { activateBrowserWallet, deactivate, activate, account, chainId } =
+        useEthers();
+    const userBalance = useEtherBalance(account);
     const { offcanvas, offcanvasHandler } = useOffcanvas();
     const { search, searchHandler } = useFlyoutSearch();
-    const { authenticate, isAuthenticated } = useMoralis();
+
+    const connectWallet = async () => {
+        if (chainId !== Constants.config.chainId) {
+            await switchNetwork(Constants.config.chainId);
+        }
+        activateBrowserWallet();
+        console.log("account: ", account, "chainId: ", chainId);
+    };
+
+    const switchNetwork = async (chain) => {
+        if (window.ethereum) {
+            await window.ethereum
+                .request({
+                    method: "wallet_switchEthereumChain",
+                    params: [
+                        {
+                            chainId: Web3.utils.toHex(chain),
+                        },
+                    ],
+                })
+                .then((res) => {
+                    console.log("switch network success!", res);
+                })
+                .catch((err) => {
+                    console.log("switch network error: ", err.message);
+                });
+        }
+    };
 
     return (
         <>
@@ -59,33 +91,37 @@ const Header = ({ className }) => {
                                 </div>
                                 <FlyoutSearchForm isOpen={search} />
                             </div>
-                            {!isAuthenticated && (
+                            {console.log(
+                                "account && chainId:",
+                                account,
+                                chainId,
+                                userBalance
+                            )}
+                            {(!account ||
+                                chainId !== Constants.config.chainId) && (
                                 <div className="setting-option header-btn">
                                     <div className="icon-box">
                                         <Button
                                             color="primary-alta"
                                             className="connectBtn"
                                             size="small"
-                                            onClick={() => authenticate()}
+                                            onClick={() => {
+                                                connectWallet();
+                                            }}
                                         >
                                             Wallet connect
                                         </Button>
                                     </div>
                                 </div>
                             )}
-                            {isAuthenticated && (
+                            {account && chainId === Constants.config.chainId && (
                                 <div className="setting-option rn-icon-list user-account">
-                                    <UserDropdown />
+                                    <UserDropdown
+                                        account={account}
+                                        balance={userBalance}
+                                    />
                                 </div>
                             )}
-                            <div className="setting-option rn-icon-list notification-badge">
-                                <div className="icon-box">
-                                    <Anchor path={headerData.activity_link}>
-                                        <i className="feather-bell" />
-                                        <span className="badge">6</span>
-                                    </Anchor>
-                                </div>
-                            </div>
                             <div className="setting-option mobile-menu-bar d-block d-xl-none">
                                 <div className="hamberger">
                                     <BurgerButton onClick={offcanvasHandler} />

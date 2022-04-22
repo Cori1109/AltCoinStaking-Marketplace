@@ -6,7 +6,6 @@ import Footer from "@layout/footer/footer-01";
 import AboutArea from "@containers/about/layout-02";
 import QuoteArea from "@containers/quote-area";
 import FunfactArea from "@containers/funfact";
-import CTAArea from "@containers/cta";
 import BlogArea from "@containers/blog/layout-01";
 import { normalizedData } from "@utils/methods";
 import { getAllPosts } from "../lib/api";
@@ -24,7 +23,6 @@ const About = ({ posts }) => {
                 <AboutArea data={content["about-section"]} />
                 <QuoteArea data={content["quote-section"]} />
                 <FunfactArea data={content["funfact-section"]} />
-                <CTAArea data={content["cta-section"]} />
                 <BlogArea data={{ ...content["blog-section"], posts }} />
             </main>
             <Footer />

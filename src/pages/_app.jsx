@@ -1,16 +1,23 @@
 import { useEffect } from "react";
 import PropTypes from "prop-types";
 import { useRouter } from "next/router";
-import { MoralisProvider } from "react-moralis";
+import { DAppProvider } from "@usedapp/core";
 import sal from "sal.js";
 import { ThemeProvider } from "next-themes";
 import "../assets/css/bootstrap.min.css";
 import "../assets/css/feather.css";
 import "../assets/scss/style.scss";
 import "react-toastify/dist/ReactToastify.css";
+import { Constants } from "../config/constants";
 
-const moralisAppId = "RthQq8e4P7aK65qA9AxkrUhs1r2l4LbVBvJ6L71v";
-const moralisServerURL = "https://u9r1l5bklpfl.usemoralis.com:2053/server";
+const chainId = Constants.config.chainId;
+
+const config = {
+    readOnlyChainId: chainId,
+    readOnlyUrls: {
+        [chainId]: Constants.rpcURL.chainId,
+    },
+};
 
 const MyApp = ({ Component, pageProps }) => {
     const router = useRouter();
@@ -25,11 +32,11 @@ const MyApp = ({ Component, pageProps }) => {
         document.body.className = `${pageProps.className}`;
     });
     return (
-        <MoralisProvider appId={moralisAppId} serverUrl={moralisServerURL}>
+        <DAppProvider config={config}>
             <ThemeProvider defaultTheme="dark">
                 <Component {...pageProps} />
             </ThemeProvider>
-        </MoralisProvider>
+        </DAppProvider>
     );
 };
 

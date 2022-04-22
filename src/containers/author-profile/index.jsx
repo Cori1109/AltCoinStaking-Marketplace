@@ -11,8 +11,6 @@ import { shuffleArray } from "@utils/methods";
 const AuthorProfileArea = ({ className, data }) => {
     const onSaleProducts = shuffleArray(data.products).slice(0, 10);
     const ownedProducts = shuffleArray(data.products).slice(0, 10);
-    const createdProducts = shuffleArray(data.products).slice(0, 10);
-    const likedProducts = shuffleArray(data.products).slice(0, 10);
 
     return (
         <div className={clsx("rn-authore-profile-area", className)}>
@@ -39,18 +37,12 @@ const AuthorProfileArea = ({ className, data }) => {
                                         >
                                             Owned
                                         </Nav.Link>
-                                        <Nav.Link
+                                        {/* <Nav.Link
                                             as="button"
                                             eventKey="nav-contact"
                                         >
                                             Created
-                                        </Nav.Link>
-                                        <Nav.Link
-                                            as="button"
-                                            eventKey="nav-liked"
-                                        >
-                                            Liked
-                                        </Nav.Link>
+                                        </Nav.Link> */}
                                     </Nav>
                                 </nav>
                             </div>
@@ -105,7 +97,7 @@ const AuthorProfileArea = ({ className, data }) => {
                                 </div>
                             ))}
                         </TabPane>
-                        <TabPane
+                        {/* <TabPane
                             className="row g-5 d-flex"
                             eventKey="nav-contact"
                         >
@@ -129,32 +121,7 @@ const AuthorProfileArea = ({ className, data }) => {
                                     />
                                 </div>
                             ))}
-                        </TabPane>
-                        <TabPane
-                            className="row g-5 d-flex"
-                            eventKey="nav-liked"
-                        >
-                            {likedProducts?.map((prod) => (
-                                <div
-                                    key={prod.id}
-                                    className="col-5 col-lg-4 col-md-6 col-sm-6 col-12"
-                                >
-                                    <Product
-                                        overlay
-                                        placeBid
-                                        title={prod.title}
-                                        slug={prod.slug}
-                                        latestBid={prod.latestBid}
-                                        price={prod.price}
-                                        likeCount={prod.likeCount}
-                                        auction_date={prod.auction_date}
-                                        image={prod.images?.[0]}
-                                        authors={prod.authors}
-                                        bitCount={prod.bitCount}
-                                    />
-                                </div>
-                            ))}
-                        </TabPane>
+                        </TabPane> */}
                     </TabContent>
                 </div>
             </TabContainer>
