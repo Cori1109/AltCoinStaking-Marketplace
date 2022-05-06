@@ -5,7 +5,6 @@ import Header from "@layout/header";
 import Footer from "@layout/footer";
 import Breadcrumb from "@components/breadcrumb";
 import ExploreProductArea from "@containers/explore-product";
-import { GetMetaData } from "@hooks/GetMetaData";
 
 export async function getStaticProps() {
     return { props: { className: "template-color-1" } };
@@ -14,14 +13,11 @@ export async function getStaticProps() {
 const Explore = () => {
     const [marketItemData, setMarketItemData] = useState([]);
 
-    const handleFetch = async () => {
-        await GetMetaData(setMarketItemData);
-    };
-
     useEffect(async () => {
-        setMarketItemData([]);
-        await handleFetch();
-        console.log("handlefetch called");
+        const res = await fetch(`http://localhost:3000/api/marketItem`);
+        const result = await res.json();
+        console.log("==== marketItem:", result.data);
+        setMarketItemData(result.data);
     }, []);
 
     return (
