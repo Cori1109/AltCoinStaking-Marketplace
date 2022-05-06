@@ -32,7 +32,7 @@ const Home = () => {
             }
         }
         setMintedCnt(_mCnts);
-    }, [mintedCnt]);
+    }, []);
 
     return (
         <Wrapper>
