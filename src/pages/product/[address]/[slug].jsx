@@ -5,6 +5,7 @@ import Header from "@layout/header";
 import Footer from "@layout/footer";
 import Breadcrumb from "@components/breadcrumb";
 import ProductDetailsArea from "@containers/product-details";
+import axios from "axios";
 
 const ProductDetails = ({ product }) => {
     return (
@@ -32,9 +33,29 @@ const ProductDetails = ({ product }) => {
 //     return { props: { products } };
 // }
 
+async function safeParseJSON(response) {
+    const body = await response.text();
+    try {
+        return JSON.parse(body);
+    } catch (err) {
+        console.error("Error:", err);
+        console.error("Response body:", body);
+        throw err;
+        // return ReE(response, err.message, 500);
+    }
+}
+
 export async function getStaticPaths() {
-    const res = await fetch(`${process.env.BASE_API_URL}/api/marketItem`);
-    const result = await res.json();
+    // var result = await axios.get(`${process.env.BASE_API_URL}/api/marketItem`, {
+    //     headers: {
+    //         Accept: "application/json, text/plain, */*",
+    //         "User-Agent": "*",
+    //     },
+    // });
+    let result = await fetch(`${process.env.BASE_API_URL}/api/marketItem`).then(
+        safeParseJSON
+    );
+    result = JSON.parse(result);
     const products = result.data;
 
     // map through to return post paths
@@ -54,8 +75,16 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
     const { address, slug } = params;
 
-    const res = await fetch(`${process.env.BASE_API_URL}/api/marketItem`);
-    const result = await res.json();
+    // var result = await axios.get(`${process.env.BASE_API_URL}/api/marketItem`, {
+    //     headers: {
+    //         Accept: "application/json, text/plain, */*",
+    //         "User-Agent": "*",
+    //     },
+    // });
+    let result = await fetch(`${process.env.BASE_API_URL}/api/marketItem`).then(
+        safeParseJSON
+    );
+    result = JSON.parse(result);
     const products = result.data;
 
     const product = products.filter((prod) => {

@@ -114,9 +114,12 @@ export default async function handler(req, res) {
                     });
                 });
             }
-            res.status(200).json({
-                data: _marketItem,
-            });
+
+            res.status(200).json(
+                JSON.stringify({
+                    data: _marketItem,
+                })
+            );
         });
         watcherTokenURIs.start();
     });
