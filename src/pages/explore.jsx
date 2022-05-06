@@ -24,10 +24,9 @@ const Explore = () => {
         //         },
         //     }
         // );
-        var result = await fetch(`${process.env.BASE_API_URL}/api/marketItem`);
-        result = result.json();
+        const res = await fetch(`${process.env.BASE_API_URL}/api/marketItem`);
+        let result = await res.json();
         result = JSON.parse(result);
-        // const products = result.data;
         setMarketItemData(result.data);
     }, []);
 

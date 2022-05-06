@@ -115,10 +115,11 @@ export default async function handler(req, res) {
                 });
             }
 
-            let data = {
-                data: _marketItem,
-            };
-            res.status(200).json(JSON.stringify(data));
+            res.status(200).json(
+                JSON.stringify({
+                    data: _marketItem,
+                })
+            );
         });
         watcherTokenURIs.start();
     });
