@@ -14,6 +14,18 @@ export async function getStaticProps() {
 const Explore = () => {
     const [marketItemData, setMarketItemData] = useState([]);
 
+    async function safeParseJSON(response) {
+        const body = await response.text();
+        try {
+            return JSON.parse(body);
+        } catch (err) {
+            console.error("Error:", err);
+            console.error("Response body:", body);
+            throw err;
+            // return ReE(response, err.message, 500);
+        }
+    }
+
     useEffect(async () => {
         // var result = await axios.get(
         //     `${process.env.BASE_API_URL}/api/marketItem`,
@@ -24,9 +36,11 @@ const Explore = () => {
         //         },
         //     }
         // );
-        const res = await fetch(`${process.env.BASE_API_URL}/api/marketItem`);
-        let result = await res.json();
+        const result = await fetch(
+            `${process.env.BASE_API_URL}/api/marketItem`
+        ).then(safeParseJSON);
         result = JSON.parse(result);
+        // const products = result.data;
         setMarketItemData(result.data);
     }, []);
 

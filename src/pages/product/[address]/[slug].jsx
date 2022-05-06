@@ -33,6 +33,18 @@ const ProductDetails = ({ product }) => {
 //     return { props: { products } };
 // }
 
+async function safeParseJSON(response) {
+    const body = await response.text();
+    try {
+        return JSON.parse(body);
+    } catch (err) {
+        console.error("Error:", err);
+        console.error("Response body:", body);
+        throw err;
+        // return ReE(response, err.message, 500);
+    }
+}
+
 export async function getStaticPaths() {
     // var result = await axios.get(`${process.env.BASE_API_URL}/api/marketItem`, {
     //     headers: {
@@ -40,8 +52,9 @@ export async function getStaticPaths() {
     //         "User-Agent": "*",
     //     },
     // });
-    const res = await fetch(`${process.env.BASE_API_URL}/api/marketItem`);
-    let result = await res.json();
+    const result = await fetch(
+        `${process.env.BASE_API_URL}/api/marketItem`
+    ).then(safeParseJSON);
     result = JSON.parse(result);
     const products = result.data;
 
@@ -68,8 +81,9 @@ export async function getStaticProps({ params }) {
     //         "User-Agent": "*",
     //     },
     // });
-    const res = await fetch(`${process.env.BASE_API_URL}/api/marketItem`);
-    let result = await res.json();
+    const result = await fetch(
+        `${process.env.BASE_API_URL}/api/marketItem`
+    ).then(safeParseJSON);
     result = JSON.parse(result);
     const products = result.data;
 
