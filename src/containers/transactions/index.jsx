@@ -19,7 +19,7 @@ const TransactionArea = ({ className, space, id, data }) => {
 
     useEffect(async () => {
         await GetTransHistory(POSTS_PER_PAGE, setDataList, setNumberOfPages);
-    });
+    }, [transData]);
 
     const paginationHandler = (page) => {
         setCurrentPage(page);
