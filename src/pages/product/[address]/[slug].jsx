@@ -34,12 +34,15 @@ const ProductDetails = ({ product }) => {
 // }
 
 export async function getStaticPaths() {
-    var result = await axios.get(`${process.env.BASE_API_URL}/api/marketItem`, {
-        headers: {
-            Accept: "application/json, text/plain, */*",
-            "User-Agent": "*",
-        },
-    });
+    // var result = await axios.get(`${process.env.BASE_API_URL}/api/marketItem`, {
+    //     headers: {
+    //         Accept: "application/json, text/plain, */*",
+    //         "User-Agent": "*",
+    //     },
+    // });
+    var result = await fetch(`${process.env.BASE_API_URL}/api/marketItem`);
+    result = result.json();
+    result = JSON.parse(result);
     const products = result.data;
 
     // map through to return post paths
@@ -59,12 +62,15 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
     const { address, slug } = params;
 
-    var result = await axios.get(`${process.env.BASE_API_URL}/api/marketItem`, {
-        headers: {
-            Accept: "application/json, text/plain, */*",
-            "User-Agent": "*",
-        },
-    });
+    // var result = await axios.get(`${process.env.BASE_API_URL}/api/marketItem`, {
+    //     headers: {
+    //         Accept: "application/json, text/plain, */*",
+    //         "User-Agent": "*",
+    //     },
+    // });
+    var result = await fetch(`${process.env.BASE_API_URL}/api/marketItem`);
+    result = result.json();
+    result = JSON.parse(result);
     const products = result.data;
 
     const product = products.filter((prod) => {
