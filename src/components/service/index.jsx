@@ -2,7 +2,7 @@ import Anchor from "@ui/anchor";
 import PropTypes from "prop-types";
 import { ImageType } from "@utils/types";
 
-const Service = ({ title, subtitle, path, description, image }) => (
+const Service = ({ title, subtitle, description, image }) => (
     <div
         data-sal="slide-up"
         data-sal-delay="150"
@@ -19,15 +19,15 @@ const Service = ({ title, subtitle, path, description, image }) => (
             <div className="subtitle">{subtitle}</div>
             <div className="content">
                 <h4 className="title">
-                    <Anchor path={path}>{title}</Anchor>
+                    <Anchor path={"/#"}>{title}</Anchor>
                 </h4>
                 <p className="description">{description}</p>
-                <Anchor className="read-more-button" path={path}>
+                <Anchor className="read-more-button" path={"/#"}>
                     <i className="feather-arrow-right" />
                 </Anchor>
             </div>
         </div>
-        <Anchor className="over-link" path={path}>
+        <Anchor className="over-link" path={"/#"}>
             <span className="visually-hidden">Click here to read more</span>
         </Anchor>
     </div>

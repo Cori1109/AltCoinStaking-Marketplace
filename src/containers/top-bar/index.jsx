@@ -5,7 +5,7 @@ import ColorSwitcher from "@components/color-switcher";
 import BurgerButton from "@ui/burger-button";
 import FlyoutSearchForm from "@components/search-form/layout-02";
 import MobileMenu from "@components/menu/mobile-menu-02";
-import { useOffcanvas, useFlyoutSearch } from "@hooks";
+import { useOffcanvas, useFlyoutSearch } from "@hooks/css";
 
 // Demo Data
 import sideMenuData from "../../data/general/menu-02.json";
@@ -76,8 +76,8 @@ const TopBarArea = () => {
                 isOpen={offcanvas}
                 onClick={offcanvasHandler}
                 logo={[
-                    { src: "/images/logo/logo-white.png" },
-                    { src: "/images/logo/logo-dark.png" },
+                    { src: "/images/logo/logo.png" },
+                    { src: "/images/logo/logo.png" },
                 ]}
             />
         </>

@@ -11,4 +11,24 @@
         margin-top: -3px;
         transition: left 0.3s ease-out, width 0.3s ease-out;
     }
+    form {
+        display: flex;
+        input {
+            height: 42px;
+            margin-right: 10px;
+            border-radius: 10px;
+            border: 1px solid #242435;
+            color: #fff;
+        }
+        input:focus {
+            border: none;
+            background-color: #242435;
+            color: #00a3ff;
+        }
+        button {
+            height: 42px;
+            padding: 0 !important;
+            min-width: 120px !important;
+        }
+    }
 }

@@ -6,11 +6,11 @@ import TabPane from "react-bootstrap/TabPane";
 import Nav from "react-bootstrap/Nav";
 import { ImageType } from "@utils/types";
 
-const GalleryTab = ({ images }) => (
+const GalleryTab = ({ image }) => (
     <div className="product-tab-wrapper">
         <TabContainer defaultActiveKey="nav-0">
             <div className="pd-tab-inner">
-                <Nav className="rn-pd-nav rn-pd-rt-content nav-pills">
+                {/* <Nav className="rn-pd-nav rn-pd-rt-content nav-pills">
                     {images?.map((image, index) => (
                         <Nav.Link
                             key={image.src}
@@ -27,20 +27,30 @@ const GalleryTab = ({ images }) => (
                             </span>
                         </Nav.Link>
                     ))}
-                </Nav>
+                </Nav> */}
                 <TabContent className="rn-pd-content">
-                    {images?.map((image, index) => (
-                        <TabPane key={image.src} eventKey={`nav-${index}`}>
-                            <div className="rn-pd-thumbnail">
-                                <Image
-                                    src={image.src}
-                                    alt={image?.alt || "Product"}
-                                    width={560}
-                                    height={560}
-                                />
-                            </div>
-                        </TabPane>
-                    ))}
+                    {/* {images?.map((image, index) => (
+                    <TabPane key={image.src} eventKey={`nav-${index}`}>
+                        <div className="rn-pd-thumbnail">
+                            <Image
+                                src={image.src}
+                                alt={image?.alt || "Product"}
+                                width={560}
+                                height={560}
+                            />
+                        </div>
+                    </TabPane>
+                    ))} */}
+                    <TabPane>
+                        <div className="rn-pd-thumbnail">
+                            <Image
+                                src={image}
+                                alt={image || "Product"}
+                                width={"560px"}
+                                height={"560px"}
+                            />
+                        </div>
+                    </TabPane>
                 </TabContent>
             </div>
         </TabContainer>

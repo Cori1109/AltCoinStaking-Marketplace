@@ -5,7 +5,7 @@ import clsx from "clsx";
 const Pagination = ({ className, currentPage, numberOfPages, onClick }) => {
     const isFirst = currentPage === 1;
     const isLast = currentPage === numberOfPages;
-    const previousPage = currentPage - 1 === 1 ? currentPage : currentPage - 1;
+    const previousPage = currentPage - 1 === 0 ? currentPage : currentPage - 1;
     const nextPage = currentPage + 1;
     return (
         <nav
@@ -15,11 +15,7 @@ const Pagination = ({ className, currentPage, numberOfPages, onClick }) => {
             <ul className="pagination">
                 {isFirst ? (
                     <li className="page-item">
-                        <button
-                            type="button"
-                            className="disabled"
-                            onClick={() => onClick(previousPage)}
-                        >
+                        <button type="button" className="disabled">
                             Previous
                         </button>
                     </li>
@@ -57,11 +53,7 @@ const Pagination = ({ className, currentPage, numberOfPages, onClick }) => {
                 )}
                 {isLast ? (
                     <li className="page-item">
-                        <button
-                            type="button"
-                            className="disabled"
-                            onClick={() => onClick(nextPage)}
-                        >
+                        <button type="button" className="disabled">
                             Next
                         </button>
                     </li>

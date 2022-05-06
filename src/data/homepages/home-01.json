@@ -6,31 +6,25 @@
             "headings": [
                 {
                     "id": 1,
-                    "content": "Discover Digital Art, Collect and Sell Your Specific NFTs."
+                    "content": "Discover, collect, and sell Your Specific NFTs."
                 }
             ],
             "texts": [
                 {
                     "id": 1,
-                    "content": "Partner with one of the world's largest retailers to showcase your brand and products."
+                    "content": "Zen Zebra Art Marketplace is the primary NFT marketplace for ZenZebraArt."
                 }
             ],
             "buttons": [
                 {
                     "id": 1,
-                    "content": "Get Started",
-                    "path": "/"
-                },
-                {
-                    "id": 2,
-                    "color": "primary-alta",
-                    "content": "Create",
-                    "path": "/create"
+                    "content": "Explore",
+                    "path": "/explore"
                 }
             ],
             "images": [
                 {
-                    "src": "/images/slider/slider-1.png"
+                    "src": "/images/slider/slider-1.gif"
                 }
             ]
         },
@@ -43,7 +37,6 @@
                 {
                     "id": 1,
                     "title": "Set up your wallet",
-                    "path": "/connect",
                     "subtitle": "Step-01",
                     "description": "Powerful features and inclusions, which makes Nuron standout, easily customizable and scalable.",
                     "images": [
@@ -55,7 +48,6 @@
                 {
                     "id": 2,
                     "title": "Create your collection",
-                    "path": "/collection",
                     "subtitle": "Step-02",
                     "description": "A great collection of beautiful website templates for your need. Choose the best suitable template.",
                     "images": [
@@ -67,7 +59,6 @@
                 {
                     "id": 3,
                     "title": "Add your NFT's",
-                    "path": "/connect",
                     "subtitle": "Step-03",
                     "description": "We've made the template fully responsive, so it looks great on all devices: desktop, tablets and.",
                     "images": [
@@ -79,7 +70,6 @@
                 {
                     "id": 4,
                     "title": "Sell Your NFT's",
-                    "path": "/creator",
                     "subtitle": "Step-04",
                     "description": "I throw myself down among the tall grass by the stream as I lie close to the earth NFT's.",
                     "images": [
@@ -118,6 +108,12 @@
             "section": "collection-section",
             "section_title": {
                 "title": "Top Collection"
+            }
+        },
+        {
+            "section": "transaction-section",
+            "section_title": {
+                "title": "Recent History"
             }
         }
     ]

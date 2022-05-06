@@ -12,63 +12,87 @@ import { ImageType } from "@utils/types";
 
 // Demo Image
 
-const ProductDetailsArea = ({ space, className, product }) => (
-    <div
-        className={clsx(
-            "product-details-area",
-            space === 1 && "rn-section-gapTop",
-            className
-        )}
-    >
-        <div className="container">
-            <div className="row g-5">
-                <div className="col-lg-7 col-md-12 col-sm-12">
-                    <Sticky>
-                        <GalleryTab images={product.images} />
-                    </Sticky>
-                </div>
-                <div className="col-lg-5 col-md-12 col-sm-12 mt_md--50 mt_sm--60">
-                    <div className="rn-pd-content-area">
-                        <ProductTitle
-                            title={product.title}
-                            likeCount={product.likeCount}
-                        />
-                        <span className="bid">
-                            Height bid{" "}
-                            <span className="price">
-                                {product.price.amount}
-                                {product.price.currency}
+const ProductDetailsArea = ({ space, className, product }) => {
+    console.log("productdetailsarea,", space, className, product);
+    return (
+        <div
+            className={clsx(
+                "product-details-area",
+                space === 1 && "rn-section-gapTop",
+                className
+            )}
+        >
+            <div className="container">
+                <div className="row g-5">
+                    <div className="col-lg-7 col-md-12 col-sm-12">
+                        <Sticky>
+                            <div className="card-thumbnail">
+                                <img
+                                    src={
+                                        // product.image
+                                        //     ? product.image
+                                        //     :
+                                        "/images/unknown.png"
+                                    }
+                                    // alt={product.image || "Product"}
+                                    style={{
+                                        width: "500px",
+                                        display: "block",
+                                        border: "1px solid #2d2b3a",
+                                        borderRadius: "20px",
+                                        background: "#1b1929",
+                                        padding: "10px",
+                                    }}
+                                />
+                            </div>
+                        </Sticky>
+                    </div>
+                    <div className="col-lg-5 col-md-12 col-sm-12 mt_md--50 mt_sm--60">
+                        <div className="rn-pd-content-area">
+                            <ProductTitle
+                                title={product.title}
+                                likeCount={product.likeCount}
+                            />
+                            <span className="bid">
+                                Height bid{" "}
+                                <span className="price">
+                                    {product.price.amount}
+                                    {product.price.currency}
+                                </span>
                             </span>
-                        </span>
-                        <h6 className="title-name">#22 Portal , Info bellow</h6>
-                        <div className="catagory-collection">
-                            <ProductCategory owner={product.owner} />
-                            <ProductCollection
-                                collection={product.collection}
-                            />
-                        </div>
-                        <Button color="primary-alta" path="#">
-                            Unlockable content included
-                        </Button>
-                        <div className="rn-bid-details">
-                            <BidTab
-                                bids={product?.bids}
-                                owner={product.owner}
-                                properties={product?.properties}
-                                tags={product?.tags}
-                                history={product?.history}
-                            />
-                            <PlaceBet
-                                highest_bid={product.highest_bid}
-                                auction_date={product?.auction_date}
-                            />
+                            <h6 className="title-name">
+                                #22 Portal , Info bellow
+                            </h6>
+                            <div className="catagory-collection">
+                                <ProductCategory owner={product.owner} />
+                                <ProductCollection
+                                    collection={product.collection}
+                                />
+                            </div>
+                            <Button color="primary-alta" path="#">
+                                Unlockable content included
+                            </Button>
+                            <div className="rn-bid-details">
+                                <BidTab
+                                    bids={product?.bids}
+                                    owner={product.owner}
+                                    properties={product?.properties}
+                                    tags={product?.tags}
+                                    history={product?.history}
+                                    tokenId={1}
+                                />
+                                <PlaceBet
+                                    highest_bid={product.highest_bid}
+                                    auction_date={product?.auction_date}
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-);
+    );
+};
 
 ProductDetailsArea.propTypes = {
     space: PropTypes.oneOf([1, 2]),

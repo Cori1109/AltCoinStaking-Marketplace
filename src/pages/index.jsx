@@ -1,16 +1,16 @@
 import SEO from "@components/seo";
 import Wrapper from "@layout/wrapper";
-import Header from "@layout/header/header-01";
-import Footer from "@layout/footer/footer-01";
-import HeroArea from "@containers/hero/layout-01";
+import Header from "@layout/header";
+import Footer from "@layout/footer";
+import HeroArea from "@containers/hero";
 import ServiceArea from "@containers/services/layout-01";
-import TopSellerArea from "@containers/top-seller/layout-01";
+// import TopSellerArea from "@containers/top-seller/layout-01";
+import TransactionArea from "@containers/transactions";
 import CollectionArea from "@containers/collection/layout-01";
 import { normalizedData } from "@utils/methods";
 
 // Demo Data
 import homepageData from "../data/homepages/home-01.json";
-import sellerData from "../data/sellers.json";
 import collectionsData from "../data/collections.json";
 
 export async function getStaticProps() {
@@ -32,10 +32,10 @@ const Home = () => {
                         collections: collectionsData.slice(0, 4),
                     }}
                 />
-                <TopSellerArea
+                <TransactionArea
                     data={{
-                        ...content["top-sller-section"],
-                        sellers: sellerData,
+                        ...content["transaction-section"],
+                        fetchAll: false,
                     }}
                 />
                 <ServiceArea data={content["service-section"]} />

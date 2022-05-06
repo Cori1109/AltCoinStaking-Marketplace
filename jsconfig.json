@@ -9,7 +9,9 @@
             "@containers/*": ["src/containers/*"],
             "@layout/*": ["src/layouts/*"],
             "@utils/*": ["src/utils/*"],
-            "@hooks": ["src/hooks"]
+            "@helpers/*": ["src/helpers/*"],
+            "@hooks/*": ["src/hooks/*"],
+            "@config/*": ["src/config/*"]
         }
     }
 }

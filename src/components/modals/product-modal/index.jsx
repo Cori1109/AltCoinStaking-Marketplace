@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import Modal from "react-bootstrap/Modal";
-import Product from "@components/product/layout-01";
+import Product from "@components/product";
 
 const ProductModal = ({ show, handleModal, data }) => (
     <Modal

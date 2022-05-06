@@ -1,37 +1,47 @@
+import { useState, useEffect } from "react";
 import SEO from "@components/seo";
 import Wrapper from "@layout/wrapper";
-import Header from "@layout/header/header-01";
-import Footer from "@layout/footer/footer-01";
+import Header from "@layout/header";
+import Footer from "@layout/footer";
 import Breadcrumb from "@components/breadcrumb";
-import ExploreProductArea from "@containers/explore-product/layout-01";
-
-// Demo data
-import productData from "../data/products.json";
+import ExploreProductArea from "@containers/explore-product";
+import { GetMetaData } from "@hooks/GetMetaData";
 
 export async function getStaticProps() {
     return { props: { className: "template-color-1" } };
 }
 
-const Home02 = () => (
-    <Wrapper>
-        <SEO pageTitle="Explore Filter" />
-        <Header />
-        <main id="main-content">
-            <Breadcrumb
-                pageTitle="Explore Filter"
-                currentPage="Explore With Filter"
-            />
-            <ExploreProductArea
-                data={{
-                    section_title: {
-                        title: "Explore Product",
-                    },
-                    products: productData,
-                }}
-            />
-        </main>
-        <Footer />
-    </Wrapper>
-);
+const Explore = () => {
+    const [marketItemData, setMarketItemData] = useState([]);
 
-export default Home02;
+    const handleFetch = async () => {
+        await GetMetaData(setMarketItemData);
+    };
+
+    useEffect(async () => {
+        setMarketItemData([]);
+        await handleFetch();
+        console.log("handlefetch called");
+    }, []);
+
+    return (
+        <Wrapper>
+            <SEO pageTitle="Explore" />
+            <Header />
+            <main id="main-content">
+                <Breadcrumb pageTitle="Explore" currentPage="Explore" />
+                <ExploreProductArea
+                    data={{
+                        section_title: {
+                            title: "Explore Product",
+                        },
+                        products: marketItemData,
+                    }}
+                />
+            </main>
+            <Footer />
+        </Wrapper>
+    );
+};
+
+export default Explore;

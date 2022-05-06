@@ -54,6 +54,23 @@ export const ItemType = PropTypes.shape({
     images: PropTypes.arrayOf(ImageType),
 });
 
+export const MarketItemType = PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    tokenId: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    owner: PropTypes.string.isRequired,
+    nftAddress: PropTypes.string.isRequired,
+    image: ImageType,
+    price: PropTypes.number.isRequired,
+    tokenURI: PropTypes.string.isRequired,
+    attributes: PropTypes.arrayOf(
+        PropTypes.shape({
+            trait_type: PropTypes.string.isRequired,
+            value: PropTypes.string.isRequired,
+        })
+    ),
+});
+
 export const ProductType = PropTypes.shape({
     id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     title: PropTypes.string.isRequired,
@@ -66,24 +83,7 @@ export const ProductType = PropTypes.shape({
     likeCount: PropTypes.number,
     image: ImageType,
     auction_date: PropTypes.string,
-    authors: PropTypes.arrayOf(
-        PropTypes.shape({
-            name: PropTypes.string.isRequired,
-            slug: PropTypes.string.isRequired,
-            image: ImageType,
-        })
-    ),
     bitCount: PropTypes.number,
-});
-
-export const SellerType = PropTypes.shape({
-    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-    name: PropTypes.string.isRequired,
-    slug: PropTypes.string.isRequired,
-    total_sale: PropTypes.number.isRequired,
-    image: ImageType.isRequired,
-    top_since: PropTypes.string,
-    isVarified: PropTypes.bool,
 });
 
 export const CollectionType = PropTypes.shape({
@@ -100,10 +100,6 @@ export const FeatureProductsType = PropTypes.shape({
     id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     title: PropTypes.string.isRequired,
     slug: PropTypes.string.isRequired,
-    author: PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        slug: PropTypes.string,
-    }),
     image: ImageType.isRequired,
 });
 

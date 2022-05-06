@@ -1,9 +1,9 @@
 import SEO from "@components/seo";
 import Wrapper from "@layout/wrapper";
-import Header from "@layout/header/header-01";
-import Footer from "@layout/footer/footer-01";
+import Header from "@layout/header";
+import Footer from "@layout/footer";
 import Breadcrumb from "@components/breadcrumb";
-import ProductArea from "@containers/explore-product/layout-01";
+import ProductArea from "@containers/product";
 
 // Demo Data
 import productData from "../data/products.json";

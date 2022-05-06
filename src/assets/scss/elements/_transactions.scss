@@ -1,0 +1,43 @@
+.trans-Tbox {
+    margin: auto 10px;
+    background: var(--background-color-1);
+    border-radius: 6px;
+    border: 1px solid var(--color-border);
+
+    .table-responsive {
+        margin-top: 10px;
+
+        .trans-Table {
+            border: none;
+            color: var(--color-body);
+
+            * {
+                border: none;
+            }
+            a {
+                text-decoration: none !important;
+            }
+        }
+    }
+
+    .pagination {
+        margin-left: 20px;
+        cursor: pointer;
+
+        .page-item .page-link {
+            background: #171423;
+            border: 1px solid var(--color-border);
+        }
+
+        .active .page-link {
+            background: #1b1929;
+        }
+
+        .disabled {
+            cursor: not-allowed;
+            .page-link {
+                background-color: #292738;
+            }
+        }
+    }
+}

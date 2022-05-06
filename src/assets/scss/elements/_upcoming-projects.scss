@@ -31,13 +31,13 @@
             }
             @media #{$md-layout} {
                 padding: 25px 15px !important;
-                span{
+                span {
                     font-size: 18px;
                 }
             }
             @media #{$sm-layout} {
                 padding: 25px 9px !important;
-                span{
+                span {
                     font-size: 16px;
                 }
             }
@@ -71,7 +71,7 @@ thead {
 tbody {
     tr {
         td {
-            padding: 25px 23px !important;
+            padding: 25px 23px;
             span {
                 font-size: 16px;
             }

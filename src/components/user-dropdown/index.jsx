@@ -1,91 +1,125 @@
-import Image from "next/image";
+import { useState } from "react";
+import { useEthers } from "@usedapp/core";
+import Blockie from "@components/blockie";
 import Anchor from "@ui/anchor";
+import Address from "@components/address";
+import NativeBalance from "@components/native-balance";
+import { getExplorer } from "@helpers/networks";
+import { Card, Image, Modal } from "react-bootstrap";
+import Button from "@ui/button";
 
-const UserDropdown = (props) => (
-    <div className="icon-box">
-        <Anchor path="/author">
-            <Image
-                src="/images/icons/boy-avater.png"
-                alt="Images"
-                layout="fixed"
-                width={38}
-                height={38}
-            />
-        </Anchor>
-        <div className="rn-dropdown">
-            <div className="rn-inner-top">
-                <h4 className="title">
-                    <Anchor path="/product">{props.account}</Anchor>
-                </h4>
-                <span>
-                    <Anchor path="/product">{props.balance}</Anchor>
-                </span>
-            </div>
-            <div className="rn-product-inner">
-                <ul className="product-list">
-                    <li className="single-product-list">
-                        <div className="thumbnail">
-                            <Anchor path="/product">
-                                <Image
-                                    src="/images/portfolio/portfolio-07.jpg"
-                                    alt="Nft Product Images"
-                                    layout="fixed"
-                                    width={50}
-                                    height={50}
-                                />
-                            </Anchor>
-                        </div>
-                        <div className="content">
-                            <h6 className="title">
-                                <Anchor path="/product">Balance</Anchor>
-                            </h6>
-                            <span className="price">25 ETH</span>
-                        </div>
-                        <div className="button" />
+const UserDropdown = (props) => {
+    const { activateBrowserWallet, deactivate, account, chainId } = useEthers();
+    const [isModalVisible, setIsModalVisible] = useState(false);
+
+    return (
+        <div className="icon-box">
+            <Blockie currentWallet scale={4} />
+            <div className="rn-dropdown">
+                <div className="rn-inner-top">
+                    <h4 className="title">
+                        <Address
+                            address={props.address}
+                            avatar="left"
+                            size={6}
+                            copyable
+                            style={{ fontSize: "20px" }}
+                        />
+                    </h4>
+                    <span style={{ display: "flex" }}>
+                        <Image
+                            src="images/icons/coin.png"
+                            width={20}
+                            height={20}
+                            alt="Coin"
+                        />
+                        <NativeBalance />
+                    </span>
+                </div>
+                <ul className="list-inner">
+                    <li>
+                        <Anchor path={`/${account}`}>My Collections</Anchor>
                     </li>
-                    <li className="single-product-list">
-                        <div className="thumbnail">
-                            <Anchor path="/product">
-                                <Image
-                                    src="/images/portfolio/portfolio-01.jpg"
-                                    alt="Nft Product Images"
-                                    layout="fixed"
-                                    width={50}
-                                    height={50}
-                                />
-                            </Anchor>
-                        </div>
-                        <div className="content">
-                            <h6 className="title">
-                                <Anchor path="/product">Balance</Anchor>
-                            </h6>
-                            <span className="price">25 ETH</span>
-                        </div>
-                        <div className="button" />
+                    <li>
+                        <Anchor path="#">
+                            <div onClick={() => setIsModalVisible(true)}>
+                                Disconnect Wallet
+                            </div>
+                        </Anchor>
+                        <Modal
+                            show={isModalVisible}
+                            onHide={() => setIsModalVisible(false)}
+                            centered
+                        >
+                            <Modal.Header
+                                closeButton
+                                style={{ background: "#00a3ff", color: "#fff" }}
+                            >
+                                <Modal.Title>Account</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                <Card
+                                    style={{
+                                        padding: "10px",
+                                        color: "blue",
+                                        borderRadius: "1rem",
+                                    }}
+                                >
+                                    <Address
+                                        avatar="left"
+                                        size={6}
+                                        copyable
+                                        style={{ fontSize: "20px" }}
+                                    />
+                                    <div
+                                        style={{
+                                            marginTop: "10px",
+                                            padding: "0 10px",
+                                        }}
+                                    >
+                                        <a
+                                            href={`${getExplorer(
+                                                chainId
+                                            )}address/${props.account}`}
+                                            style={{
+                                                color: "#000",
+                                            }}
+                                            target="_blank"
+                                            rel="noreferrer"
+                                        >
+                                            {/* <SelectOutlined
+                                                style={{ marginRight: "5px" }}
+                                            /> */}
+                                            View on Explorer
+                                        </a>
+                                    </div>
+                                </Card>
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button
+                                    size="large"
+                                    type="primary"
+                                    style={{
+                                        width: "100%",
+                                        marginTop: "10px",
+                                        borderRadius: "0.5rem",
+                                        fontSize: "16px",
+                                        fontWeight: "500",
+                                    }}
+                                    onClick={() => {
+                                        deactivate();
+                                        setIsModalVisible(false);
+                                    }}
+                                >
+                                    Disconnect Wallet
+                                </Button>
+                            </Modal.Footer>
+                        </Modal>
                     </li>
                 </ul>
             </div>
-            <div className="add-fund-button mt--20 pb--20">
-                <Anchor className="btn btn-primary-alta w-100" path="/connect">
-                    Add Your More Funds
-                </Anchor>
-            </div>
-            <ul className="list-inner">
-                <li>
-                    <Anchor path="/author">My Profile</Anchor>
-                </li>
-                <li>
-                    <Anchor path="/edit-profile">Edit Profile</Anchor>
-                </li>
-                <li>
-                    <Anchor path="/connect">Manage funds</Anchor>
-                </li>
-                <li>
-                    <Anchor path="/login">Sign Out</Anchor>
-                </li>
-            </ul>
         </div>
-    </div>
-);
+    );
+};
 
 export default UserDropdown;

@@ -380,12 +380,13 @@
         border-bottom: none;
         display: flex;
         flex-wrap: wrap;
+        justify-content: space-evenly;
         transition: var(--transition);
         background: var(--background-color-1);
         border: 1px solid var(--color-border);
         border-radius: 6px;
         button {
-            width: 150px;
+            width: 45%;
             height: 50px;
             border: none;
             color: var(--color-white);
@@ -403,10 +404,26 @@
                 border-radius: 5px;
                 border: transparent;
             }
-            @media #{$laptop-device} {
-                width: 130px;
-            }
         }
+    }
+}
+
+.pd-table-box {
+    margin-top: 40px;
+    border-radius: 6px;
+    border: 1px solid var(--color-border);
+}
+
+.pdTable {
+    background: var(--background-color-1);
+    border: none;
+    color: var(--color-body);
+
+    * {
+        border: none;
+    }
+    a {
+        text-decoration: none !important;
     }
 }
 

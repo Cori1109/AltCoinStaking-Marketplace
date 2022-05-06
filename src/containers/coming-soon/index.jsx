@@ -10,8 +10,8 @@ const CommingSoonArea = () => (
                     <div className="inner">
                         <Logo
                             logo={[
-                                { src: "/images/logo/logo-white.png" },
-                                { src: "/images/logo/logo-dark.png" },
+                                { src: "/images/logo/logo.png" },
+                                { src: "/images/logo/logo.png" },
                             ]}
                         />
                         <div className="content">

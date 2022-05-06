@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import clsx from "clsx";
-import { useScrollToTop } from "@hooks";
+import { useScrollToTop } from "src/hooks/css";
 
 const ScrollToTop = () => {
     const { stick, onClickHandler } = useScrollToTop();

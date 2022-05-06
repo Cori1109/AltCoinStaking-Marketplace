@@ -15,7 +15,7 @@ const chainId = Constants.config.chainId;
 const config = {
     readOnlyChainId: chainId,
     readOnlyUrls: {
-        [chainId]: Constants.rpcURL.chainId,
+        [chainId]: Constants.rpcURL[chainId][2],
     },
 };
 

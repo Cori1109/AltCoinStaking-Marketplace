@@ -12,6 +12,7 @@
         "clean": "rimraf node_modules"
     },
     "dependencies": {
+        "@makerdao/multicall": "^0.12.0",
         "@usedapp/core": "^1.0.0",
         "@walletconnect/web3-provider": "^1.7.3",
         "@web3auth/web3auth": "^0.3.3",
@@ -28,11 +29,13 @@
         "next-themes": "^0.1.1",
         "prop-types": "^15.7.2",
         "react": "17.0.2",
+        "react-blockies": "^1.4.1",
         "react-bootstrap": "^2.1.1",
         "react-countdown": "^2.3.2",
         "react-countup": "^6.1.1",
         "react-dom": "17.0.2",
         "react-hook-form": "^7.27.1",
+        "react-hot-toast": "^2.2.0",
         "react-intersection-observer": "^8.33.1",
         "react-moralis": "^1.3.2",
         "react-range": "^1.8.12",

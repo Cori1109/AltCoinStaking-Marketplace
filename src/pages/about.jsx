@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 import SEO from "@components/seo";
 import Wrapper from "@layout/wrapper";
 import Header from "@layout/header/header-01";
-import Footer from "@layout/footer/footer-01";
+import Footer from "@layout/footer";
 import AboutArea from "@containers/about/layout-02";
 import QuoteArea from "@containers/quote-area";
 import FunfactArea from "@containers/funfact";
