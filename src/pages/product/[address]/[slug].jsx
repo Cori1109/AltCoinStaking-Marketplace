@@ -52,9 +52,9 @@ export async function getStaticPaths() {
     //         "User-Agent": "*",
     //     },
     // });
-    const result = await fetch(
-        `${process.env.BASE_API_URL}/api/marketItem`
-    ).then(safeParseJSON);
+    let result = await fetch(`${process.env.BASE_API_URL}/api/marketItem`).then(
+        safeParseJSON
+    );
     result = JSON.parse(result);
     const products = result.data;
 
@@ -81,9 +81,9 @@ export async function getStaticProps({ params }) {
     //         "User-Agent": "*",
     //     },
     // });
-    const result = await fetch(
-        `${process.env.BASE_API_URL}/api/marketItem`
-    ).then(safeParseJSON);
+    let result = await fetch(`${process.env.BASE_API_URL}/api/marketItem`).then(
+        safeParseJSON
+    );
     result = JSON.parse(result);
     const products = result.data;
 

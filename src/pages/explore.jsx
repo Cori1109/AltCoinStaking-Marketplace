@@ -36,7 +36,7 @@ const Explore = () => {
         //         },
         //     }
         // );
-        const result = await fetch(
+        let result = await fetch(
             `${process.env.BASE_API_URL}/api/marketItem`
         ).then(safeParseJSON);
         result = JSON.parse(result);
