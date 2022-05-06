@@ -52,7 +52,7 @@ export const GetPriceById = async (_tokenId, setPrice) => {
                                 return setPrice({ itemId: _itemId, price: 0 });
                             case Constants.events.cancelList: // CancelList
                                 _event = "Cancel";
-                                _itemId = parseInt(result[i].topics[1]);
+                                _itemId = parseInt(result[i].topics[3]);
                                 return setPrice({ itemId: _itemId, price: 0 });
 
                             default:

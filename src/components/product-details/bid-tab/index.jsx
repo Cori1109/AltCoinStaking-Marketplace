@@ -11,16 +11,18 @@ import Nav from "react-bootstrap/Nav";
 import DetailsTabContent from "./details-tab-content";
 import { getEllipsisTxt } from "@helpers/formatters";
 import { Constants } from "@config/constants";
+import web3 from "web3";
 
 const BidTab = ({ className, tokenId, owner, properties, tags }) => {
     const [dataList, setDataList] = useState([]);
 
     useEffect(async () => {
         await getTransHistory();
-    });
+    }, []);
 
     const getTopicTwo = () => {
-        const _toId = String(tokenId);
+        let _toId = String(web3.utils.numberToHex(tokenId));
+        _toId = _toId.slice(2, _toId.length);
         const _topic =
             "0x0000000000000000000000000000000000000000000000000000000000000000";
         const _topicTwo = _topic
@@ -44,7 +46,7 @@ const BidTab = ({ className, tokenId, owner, properties, tags }) => {
     const getTransHistory = async () => {
         const _topic2 = getTopicTwo();
         const URL = `${process.env.POLYGONSCAN_API_URL}?module=logs&action=getLogs&fromBlock=0&toBlock=99999999&address=${process.env.MARKETPLACE_ADDRESS}&topic2=${_topic2}&apikey=${process.env.POLYGONSCAN_API_KEY}`;
-        axios.get(URL).then(
+        await axios.get(URL).then(
             (response) => {
                 if (response.data.status != 1) {
                     toast.error(response.data.message);
@@ -131,64 +133,71 @@ const BidTab = ({ className, tokenId, owner, properties, tags }) => {
                     </TabPane>
                     <TabPane eventKey="nav-contact">
                         <div className="pd-table-box">
-                            <Table responsive className="pdTable">
-                                <thead>
-                                    <tr
-                                        style={{
-                                            fontWeight: "bold",
-                                            color: "#fff",
-                                        }}
-                                    >
-                                        <th>Event</th>
-                                        <th>Price</th>
-                                        <th>From</th>
-                                        <th>To</th>
-                                        <th>Transaction</th>
-                                        <th>Date</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {dataList?.map((data) => (
-                                        <tr>
-                                            <td style={{ color: "#fff" }}>
-                                                {data.event}
-                                            </td>
-                                            <td>{data.price}</td>
-                                            <td>
-                                                <a
-                                                    href={`https://mumbai.polygonscan.com/address/${data.from}`}
-                                                    target="_blank"
-                                                >
-                                                    {getEllipsisTxt(
-                                                        data.from,
-                                                        4
-                                                    )}
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <a
-                                                    href={`https://mumbai.polygonscan.com/address/${data.to}`}
-                                                    target="_blank"
-                                                >
-                                                    {getEllipsisTxt(data.to, 4)}
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <a
-                                                    href={`https://mumbai.polygonscan.com/tx/${data.transaction}`}
-                                                    target="_blank"
-                                                >
-                                                    {getEllipsisTxt(
-                                                        data.transaction,
-                                                        4
-                                                    )}
-                                                </a>
-                                            </td>
-                                            <td>{data.date}</td>
+                            {dataList.length != 0 ? (
+                                <Table responsive className="pdTable">
+                                    <thead>
+                                        <tr
+                                            style={{
+                                                fontWeight: "bold",
+                                                color: "#fff",
+                                            }}
+                                        >
+                                            <th>Event</th>
+                                            <th>Price</th>
+                                            <th>From</th>
+                                            <th>To</th>
+                                            <th>Transaction</th>
+                                            <th>Date</th>
                                         </tr>
-                                    ))}
-                                </tbody>
-                            </Table>
+                                    </thead>
+                                    <tbody>
+                                        {dataList.map((data) => (
+                                            <tr>
+                                                <td style={{ color: "#fff" }}>
+                                                    {data.event}
+                                                </td>
+                                                <td>{data.price}</td>
+                                                <td>
+                                                    <a
+                                                        href={`https://mumbai.polygonscan.com/address/${data.from}`}
+                                                        target="_blank"
+                                                    >
+                                                        {getEllipsisTxt(
+                                                            data.from,
+                                                            4
+                                                        )}
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a
+                                                        href={`https://mumbai.polygonscan.com/address/${data.to}`}
+                                                        target="_blank"
+                                                    >
+                                                        {getEllipsisTxt(
+                                                            data.to,
+                                                            4
+                                                        )}
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    <a
+                                                        href={`https://mumbai.polygonscan.com/tx/${data.transaction}`}
+                                                        target="_blank"
+                                                    >
+                                                        {getEllipsisTxt(
+                                                            data.transaction,
+                                                            4
+                                                        )}
+                                                    </a>
+                                                </td>
+                                                <td>{data.date}</td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                </Table>
+                            ) : (
+                                <>No Records Found</>
+                            )}
                         </div>
                     </TabPane>
                 </TabContent>
