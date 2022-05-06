@@ -5,6 +5,7 @@ import Header from "@layout/header";
 import Footer from "@layout/footer";
 import Breadcrumb from "@components/breadcrumb";
 import ProductDetailsArea from "@containers/product-details";
+import axios from "axios";
 
 const ProductDetails = ({ product }) => {
     return (
@@ -33,8 +34,12 @@ const ProductDetails = ({ product }) => {
 // }
 
 export async function getStaticPaths() {
-    const res = await fetch(`${process.env.BASE_API_URL}/api/marketItem`);
-    const result = await res.json();
+    var result = await axios.get(`${process.env.BASE_API_URL}/api/marketItem`, {
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "User-Agent": "*",
+        },
+    });
     const products = result.data;
 
     // map through to return post paths
@@ -54,8 +59,12 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
     const { address, slug } = params;
 
-    const res = await fetch(`${process.env.BASE_API_URL}/api/marketItem`);
-    const result = await res.json();
+    var result = await axios.get(`${process.env.BASE_API_URL}/api/marketItem`, {
+        headers: {
+            Accept: "application/json, text/plain, */*",
+            "User-Agent": "*",
+        },
+    });
     const products = result.data;
 
     const product = products.filter((prod) => {

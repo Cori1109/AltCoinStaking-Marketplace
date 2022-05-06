@@ -5,6 +5,7 @@ import Header from "@layout/header";
 import Footer from "@layout/footer";
 import Breadcrumb from "@components/breadcrumb";
 import ExploreProductArea from "@containers/explore-product";
+import axios from "axios";
 
 export async function getStaticProps() {
     return { props: { className: "template-color-1" } };
@@ -14,9 +15,15 @@ const Explore = () => {
     const [marketItemData, setMarketItemData] = useState([]);
 
     useEffect(async () => {
-        const res = await fetch(`${process.env.BASE_API_URL}/api/marketItem`);
-        const result = await res.json();
-        console.log("==== marketItem:", result.data);
+        var result = await axios.get(
+            `${process.env.BASE_API_URL}/api/marketItem`,
+            {
+                headers: {
+                    Accept: "application/json, text/plain, */*",
+                    "User-Agent": "*",
+                },
+            }
+        );
         setMarketItemData(result.data);
     }, []);
 
