@@ -40,28 +40,16 @@ export const GetPriceById = async (_tokenId) => {
                                         result[i].data.length
                                     );
                                 _priceWei = parseInt(_pString);
-                                console.log(
-                                    "_price-----------",
-                                    _tokenId,
-                                    _priceWei
-                                );
-                                return _priceWei;
+                                _itemId = parseInt(result[i].topics[1]);
+                                return { itemId: _itemId, price: _priceWei };
                             case Constants.events.marketItemSold: // MarketItemSold
                                 _event = "Sale";
-                                console.log(
-                                    "_price-----------",
-                                    _tokenId,
-                                    "sale"
-                                );
-                                return 0;
+                                _itemId = parseInt(result[i].topics[1]);
+                                return { itemId: _itemId, price: 0 };
                             case Constants.events.cancelList: // CancelList
                                 _event = "Cancel";
-                                console.log(
-                                    "_price-----------",
-                                    _tokenId,
-                                    "cancel"
-                                );
-                                return 0;
+                                _itemId = parseInt(result[i].topics[1]);
+                                return { itemId: _itemId, price: 0 };
 
                             default:
                                 break;

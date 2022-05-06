@@ -1,51 +1,150 @@
-import Web3 from "web3";
-import { utils } from "ethers";
-import { Contract } from "@ethersproject/contracts";
-import { useContractFunction } from "@usedapp/core";
-import marketplaceABI from "abi/MarketPlace-ABI";
-import { Constants } from "@config/constants";
+import toast, { Toaster } from "react-hot-toast";
+import MarketplaceABI from "src/abi/Marketplace-ABI";
+import { ethers } from "ethers";
 
-const MarketPlaceAddress = process.env.REACT_APP_MARKETPLACE_ADDRESS;
-const marketplaceInterface = new utils.Interface(marketplaceABI);
-const web3 = new Web3(Constants.rpcURL[process.env.CHAIN_ID][2]);
-const uContract = new Contract(MarketPlaceAddress, marketplaceInterface);
-const wContract = new web3.eth.Contract(marketplaceABI, MarketPlaceAddress);
-let apprContract;
+const approveABI = [
+    {
+        inputs: [
+            { internalType: "address", name: "to", type: "address" },
+            {
+                internalType: "tokenId",
+                name: "tokenId",
+                type: "uint256",
+            },
+        ],
+        name: "approve",
+        outputs: [],
+        stateMutability: "nonpayable",
+        type: "function",
+    },
+];
 
-export async function FetchMarketItems() {
-    let MarketItem = [];
+export const GetApprove = async (address, tokenId) => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const zenContract = new ethers.Contract(
+        address,
+        approveABI,
+        provider.getSigner()
+    );
     try {
-        MarketItem = await wContract.methods.fetchMarketItems().call();
+        await zenContract
+            .approve(address, tokenId)
+            .then((tx) => {
+                return tx.wait().then(
+                    (receipt) => {
+                        // This is entered if the transaction receipt indicates success
+                        console.log("receipt", receipt);
+                        toast.success("Approve Success!");
+                        return true;
+                    },
+                    (error) => {
+                        console.log("error", error);
+                        toast.error("Approve Cancelled!");
+                    }
+                );
+            })
+            .catch((err) => {
+                console.log("error", err);
+            });
     } catch (error) {
-        console.log("fetchMarketItem error:", error);
+        console.log("error", error);
     }
-    return MarketItem;
-}
+};
 
-export function GetAppAddr(address) {
-    console.log("appaddr", address);
-    const approveABI = [
-        {
-            inputs: [
-                { internalType: "address", name: "to", type: "address" },
-                { internalType: "tokenId", name: "tokenId", type: "uint256" },
-            ],
-            name: "approve",
-            outputs: [],
-            stateMutability: "nonpayable",
-            type: "function",
-        },
-    ];
-    const approveInterface = new utils.Interface(approveABI);
-    apprContract = new Contract(address, approveInterface);
-}
+export const CancelSale = async (tokenId) => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const marketplaceContract = new ethers.Contract(
+        process.env.MARKETPLACE_ADDRESS,
+        MarketplaceABI,
+        provider.getSigner()
+    );
+    try {
+        await marketplaceContract
+            .cancelSale(tokenId)
+            .then((tx) => {
+                return tx.wait().then(
+                    (receipt) => {
+                        // This is entered if the transaction receipt indicates success
+                        console.log("receipt", receipt);
+                        toast.success("List Cancelled!");
+                        return true;
+                    },
+                    (error) => {
+                        console.log("error", error);
+                        toast.error("List Cancel Failed!");
+                    }
+                );
+            })
+            .catch((err) => {
+                console.log("error", err);
+            });
+    } catch (error) {
+        console.log("error", error);
+    }
+};
 
-export function ApproveMethod() {
-    const { state, send } = useContractFunction(apprContract, "approve");
-    return { state, send };
-}
+export const CreateMarketItem = async (contract, tokenId, price) => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const marketplaceContract = new ethers.Contract(
+        process.env.MARKETPLACE_ADDRESS,
+        MarketplaceABI,
+        provider.getSigner()
+    );
+    try {
+        await marketplaceContract
+            .createMarketItem(contract, tokenId, price)
+            .then((tx) => {
+                return tx.wait().then(
+                    (receipt) => {
+                        // This is entered if the transaction receipt indicates success
+                        console.log("receipt", receipt);
+                        toast.success("CreateMarketItem Success!");
+                        return true;
+                    },
+                    (error) => {
+                        console.log("error", error);
+                        toast.error("CreateMarketItem Cancelled!");
+                    }
+                );
+            })
+            .catch((err) => {
+                console.log("error", err);
+            });
+    } catch (error) {
+        console.log("error", error);
+    }
+};
 
-export function UseContractMethod(methodName) {
-    const { state, send } = useContractFunction(uContract, methodName);
-    return { state, send };
-}
+export const CreateMarketSale = async (contract, tokenId, price) => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const marketplaceContract = new ethers.Contract(
+        process.env.MARKETPLACE_ADDRESS,
+        MarketplaceABI,
+        provider.getSigner()
+    );
+    try {
+        await marketplaceContract
+            .createMarketSale(contract, tokenId, {
+                value: ethers.utils.parseEther(price.toString()),
+            })
+            .then((tx) => {
+                return tx.wait().then(
+                    (receipt) => {
+                        // This is entered if the transaction receipt indicates success
+                        console.log("receipt", receipt);
+                        toast.success("Buy Success!");
+                        return true;
+                    },
+                    (error) => {
+                        console.log("error", error);
+                        toast.error("Buy Failed!");
+                    }
+                );
+            })
+            .catch((err) => {
+                console.log("error", err);
+            });
+    } catch (error) {
+        console.log("error", error);
+    }
+};
