@@ -3,7 +3,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { Constants } from "@config/constants";
 import web3 from "web3";
 
-const URL = `${Constants.config.polygonscan_api_url}?module=logs&action=getLogs&fromBlock=0&toBlock=99999999&address=${Constants.config.marketplace_address}&apikey=${Constants.config.polygonscan_api_key}`;
+const URL = `${process.env.POLYGONSCAN_API_URL}?module=logs&action=getLogs&fromBlock=0&toBlock=99999999&address=${process.env.MARKETPLACE_ADDRESS}&apikey=${process.env.POLYGONSCAN_API_KEY}`;
 
 export const GetPriceById = async (_tokenId) => {
     const getTopicTwo = (tokenId) => {

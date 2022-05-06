@@ -43,7 +43,7 @@ const BidTab = ({ className, tokenId, owner, properties, tags }) => {
 
     const getTransHistory = async () => {
         const _topic2 = getTopicTwo();
-        const URL = `${Constants.config.polygonscan_api_url}?module=logs&action=getLogs&fromBlock=0&toBlock=99999999&address=${Constants.config.marketplace_address}&topic2=${_topic2}&apikey=${Constants.config.polygonscan_api_key}`;
+        const URL = `${process.env.POLYGONSCAN_API_URL}?module=logs&action=getLogs&fromBlock=0&toBlock=99999999&address=${process.env.MARKETPLACE_ADDRESS}&topic2=${_topic2}&apikey=${process.env.POLYGONSCAN_API_KEY}`;
         axios.get(URL).then(
             (response) => {
                 if (response.data.status != 1) {

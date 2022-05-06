@@ -19,7 +19,7 @@ import headerData from "../../data/general/header-01.json";
 import menuData from "../../data/general/menu-01.json";
 import Web3 from "web3";
 
-const web3 = new Web3(Constants.rpcURL[Constants.config.chainId][2]);
+const web3 = new Web3(Constants.rpcURL[process.env.CHAIN_ID][2]);
 
 const steps = [
     {
@@ -43,7 +43,7 @@ const Header = ({ className }) => {
     const { search, searchHandler } = useFlyoutSearch();
 
     const connectWallet = async () => {
-        const _chained = chainId != Constants.config.chainId;
+        const _chained = chainId != process.env.CHAIN_ID;
         const _cur = _chained ? 0 : 1;
         setCurrent(_cur);
         setChainning(_chained);
@@ -113,8 +113,7 @@ const Header = ({ className }) => {
                                 </div>
                                 <FlyoutSearchForm isOpen={search} />
                             </div>
-                            {!account ||
-                            chainId !== Constants.config.chainId ? (
+                            {!account || chainId !== process.env.CHAIN_ID ? (
                                 <div className="setting-option header-btn">
                                     <div className="icon-box">
                                         <Button
@@ -166,7 +165,7 @@ const Header = ({ className }) => {
                                                 type="primary"
                                                 onClick={() => {
                                                     switchNetwork(
-                                                        Constants.config.chainId
+                                                        process.env.CHAIN_ID
                                                     );
                                                     next();
                                                 }}

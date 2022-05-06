@@ -25,7 +25,7 @@ const ProductDetails = ({ products }) => {
 
 export async function getServerSideProps() {
     // Fetch data from external API
-    const res = await fetch(`http://localhost:3000/api/marketItem`);
+    const res = await fetch(`${process.env.BASE_API_URL}/api/marketItem`);
     const result = await res.json();
     const products = result.data;
 

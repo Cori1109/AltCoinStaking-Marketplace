@@ -14,7 +14,7 @@ const Explore = () => {
     const [marketItemData, setMarketItemData] = useState([]);
 
     useEffect(async () => {
-        const res = await fetch(`http://localhost:3000/api/marketItem`);
+        const res = await fetch(`${process.env.BASE_API_URL}/api/marketItem`);
         const result = await res.json();
         console.log("==== marketItem:", result.data);
         setMarketItemData(result.data);

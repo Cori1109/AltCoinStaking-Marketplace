@@ -10,7 +10,7 @@ import "../assets/scss/style.scss";
 import "react-toastify/dist/ReactToastify.css";
 import { Constants } from "../config/constants";
 
-const chainId = Constants.config.chainId;
+const chainId = process.env.CHAIN_ID;
 
 const config = {
     readOnlyChainId: chainId,

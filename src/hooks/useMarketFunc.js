@@ -7,7 +7,7 @@ import { Constants } from "@config/constants";
 
 const MarketPlaceAddress = process.env.REACT_APP_MARKETPLACE_ADDRESS;
 const marketplaceInterface = new utils.Interface(marketplaceABI);
-const web3 = new Web3(Constants.rpcURL[Constants.config.chainId][2]);
+const web3 = new Web3(Constants.rpcURL[process.env.CHAIN_ID][2]);
 const uContract = new Contract(MarketPlaceAddress, marketplaceInterface);
 const wContract = new web3.eth.Contract(marketplaceABI, MarketPlaceAddress);
 let apprContract;

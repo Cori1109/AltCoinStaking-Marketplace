@@ -4,10 +4,9 @@ import { config } from "@config/multicall";
 import { FetchMetadata } from "@hooks/FetchMetadata";
 import { GetTotalSupply, GetBaseURI } from "@hooks/GetBaseData";
 import { useIPFS } from "@hooks/useIPFS";
-import { Constants } from "@config/constants";
 
 export default async function handler(req, res) {
-    const nft_address = Constants.config.nft_address;
+    const nft_address = process.env.NFT_ADDRESS;
     const { resolveLink } = useIPFS();
     const totalSupply = await GetTotalSupply();
     const baseTokenURI = await GetBaseURI();

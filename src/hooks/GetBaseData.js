@@ -3,7 +3,7 @@ import NFTABI from "src/abi/NFTABI";
 import MaticTokenABI from "src/abi/MaticTokenABI";
 import { Constants } from "src/config/constants";
 
-const web3 = new Web3(Constants.rpcURL[Constants.config.chainId][2]);
+const web3 = new Web3(Constants.rpcURL[process.env.CHAIN_ID][2]);
 
 export const GetBalAccount = async (account) => {
     const tokenInst = new web3.eth.Contract(
@@ -23,7 +23,7 @@ export const GetBalAccount = async (account) => {
 };
 
 export const GetMintedCnt = async (_stage) => {
-    const nftInst = new web3.eth.Contract(NFTABI, Constants.config.nft_address);
+    const nftInst = new web3.eth.Contract(NFTABI, process.env.NFT_ADDRESS);
     const _mintedCnt = await nftInst.methods
         .mintedCnt(_stage)
         .call()
@@ -38,7 +38,7 @@ export const GetMintedCnt = async (_stage) => {
 };
 
 export const GetTotalSupply = async () => {
-    const nftInst = new web3.eth.Contract(NFTABI, Constants.config.nft_address);
+    const nftInst = new web3.eth.Contract(NFTABI, process.env.NFT_ADDRESS);
     const totalSup = await nftInst.methods
         .totalSupply()
         .call()
@@ -53,7 +53,7 @@ export const GetTotalSupply = async () => {
 };
 
 export const GetBalanceOf = async (_address) => {
-    const nftInst = new web3.eth.Contract(NFTABI, Constants.config.nft_address);
+    const nftInst = new web3.eth.Contract(NFTABI, process.env.NFT_ADDRESS);
     const balanceOf = await nftInst.methods
         .balanceOf(_address)
         .call()
@@ -68,7 +68,7 @@ export const GetBalanceOf = async (_address) => {
 };
 
 export const GetBaseURI = async () => {
-    const nftInst = new web3.eth.Contract(NFTABI, Constants.config.nft_address);
+    const nftInst = new web3.eth.Contract(NFTABI, process.env.NFT_ADDRESS);
     const _baseURI = await nftInst.methods
         .baseTokenURI()
         .call()

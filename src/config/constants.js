@@ -1,12 +1,4 @@
 export const Constants = {
-    config: {
-        chainId: 80001,
-        marketplace_address: "0x524786f39fc11Fd94068F8A86B19a5F772a93530",
-        nft_address: "0x83894F1f4b685e6E12D08E046199530776E846dB",
-        polygonscan_api_key: "7RUCXP6THP65HNUSVJ1Z1TUR1R1NHA8ZYV",
-        polygonscan_api_url: "https://api-testnet.polygonscan.com/api",
-        // polygonscan_api_url: "https://api.polygonscan.com/api",
-    },
     events: {
         marketItemcreated:
             "0x6c768f237d15b0eedb46b2f49918dc5109839c2d232c382d377c40fabeeec92d",
