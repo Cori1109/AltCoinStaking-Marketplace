@@ -135,6 +135,8 @@
         }
 
         img {
+            border: 10px solid #1b1929;
+            border-radius: 30px;
             height: auto;
             width: 100%;
         }
@@ -790,7 +792,7 @@
 .padding-controler-slide-product-2 {
     padding-top: 50px !important;
     padding-bottom: 50px !important;
-    @media only screen and (min-width: 1199px){
+    @media only screen and (min-width: 1199px) {
         padding-top: 30px !important;
         padding-bottom: 100px !important;
     }
@@ -799,15 +801,15 @@
 .fullscreen_image-banner {
     height: 100%;
     width: 100%;
-    @media only screen and (min-width: 1199px){
+    @media only screen and (min-width: 1199px) {
         height: 800px !important;
     }
 }
 .fullscreen_image-banner {
-    .place-bet-area .winning-bid{
+    .place-bet-area .winning-bid {
         flex-basis: 55%;
     }
-    .place-bet-area .rn-bet-create{
+    .place-bet-area .rn-bet-create {
         flex-wrap: wrap;
     }
 }

@@ -86,6 +86,12 @@ export const ProductType = PropTypes.shape({
     bitCount: PropTypes.number,
 });
 
+export const LevelType = PropTypes.shape({
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    title: PropTypes.string.isRequired,
+    image: ImageType.isRequired,
+});
+
 export const CollectionType = PropTypes.shape({
     id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
     title: PropTypes.string.isRequired,

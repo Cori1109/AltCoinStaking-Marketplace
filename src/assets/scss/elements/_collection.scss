@@ -128,13 +128,13 @@
         padding: 18px;
         background: var(--background-color-1);
         border-radius: 5px;
+        width: fit-content;
         .collection-big-thumbnail {
             overflow: hidden;
             border-radius: 5px;
-            img {
+            video {
                 border-radius: 5px;
                 object-fit: cover;
-                width: 100%;
                 height: auto;
                 transition: var(--transition);
             }
@@ -229,7 +229,7 @@
 
         &:hover {
             .collection-big-thumbnail {
-                img {
+                video {
                     transform: scale(1.1);
                 }
             }
