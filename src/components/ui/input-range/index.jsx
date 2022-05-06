@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 // import { Range } from "react-range";
+import { useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
 import PropTypes from "prop-types";
 import Button from "@ui/button";
@@ -10,7 +11,7 @@ import Button from "@ui/button";
 // const MIN = 0;
 // const MAX = 100;
 
-const InputRange = ({ values, onChange }) => {
+const InputRange = ({ onChange }) => {
     // const renderTrack = (props) => (
     //     <SliderTrack {...props} min={MIN} max={MAX} values={values} />
     // );
@@ -20,31 +21,44 @@ const InputRange = ({ values, onChange }) => {
     //     const formData = new FormData(e.target);
     //     console.log("formdata:", formData);
     // };
+    const [minPrice, setMinPrice] = useState("");
+    const [maxPrice, setMaxPrice] = useState("");
+
+    const handleChangeMinPrice = (event) => {
+        if (event.target.value[event.target.value.length - 1] === ".") return;
+        if (Number.isInteger(Number(event.target.value))) {
+            if (event.target.value.length < 6) setMinPrice(event.target.value);
+        }
+    };
+
+    const handleChangeMaxPrice = (event) => {
+        if (event.target.value[event.target.value.length - 1] === ".") return;
+        if (Number.isInteger(Number(event.target.value))) {
+            if (event.target.value.length < 6) setMaxPrice(event.target.value);
+        }
+    };
+
+    useEffect(() => {
+        onChange(minPrice, maxPrice);
+    }, [minPrice, maxPrice]);
 
     return (
         <div className="input-range">
-            <Form
-                onSubmit={(e) => {
-                    onFormSubmit(e);
-                }}
-            >
-                <Form.Control
+            <Form>
+                <input
                     type="text"
                     name="min"
-                    onChange={(vals) => onChange(vals)}
-                    values={values[0]}
+                    onChange={handleChangeMinPrice}
+                    value={minPrice}
                     placeholder="Min"
                 />
-                <Form.Control
+                <input
                     type="text"
                     name="max"
-                    values={values[1]}
-                    onChange={(vals) => onChange(vals)}
+                    value={maxPrice}
+                    onChange={handleChangeMaxPrice}
                     placeholder="Max"
                 />
-                <Button variant="primary" type="submit">
-                    Filter
-                </Button>
             </Form>
             {/* <Range
                 step={STEP}

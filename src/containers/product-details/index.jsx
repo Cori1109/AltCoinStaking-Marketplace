@@ -9,10 +9,11 @@ import ProductCollection from "@components/product-details/collection";
 import BidTab from "@components/product-details/bid-tab";
 import PlaceBet from "@components/product-details/place-bet";
 import { ImageType } from "@utils/types";
-
+import { getEllipsisTxt } from "@helpers/formatters";
 // Demo Image
 
 const ProductDetailsArea = ({ space, className, product }) => {
+    // const className = "template-color-1";
     console.log("productdetailsarea,", space, className, product);
     return (
         <div
@@ -29,10 +30,10 @@ const ProductDetailsArea = ({ space, className, product }) => {
                             <div className="card-thumbnail">
                                 <img
                                     src={
-                                        // product.image
+                                        product.image
                                         //     ? product.image
                                         //     :
-                                        "/images/unknown.png"
+                                        // "/images/unknown.png"
                                     }
                                     // alt={product.image || "Product"}
                                     style={{
@@ -50,40 +51,37 @@ const ProductDetailsArea = ({ space, className, product }) => {
                     <div className="col-lg-5 col-md-12 col-sm-12 mt_md--50 mt_sm--60">
                         <div className="rn-pd-content-area">
                             <ProductTitle
-                                title={product.title}
-                                likeCount={product.likeCount}
+                                title={product.name}
+                                // likeCount={product.likeCount}
                             />
                             <span className="bid">
-                                Height bid{" "}
+                                Price{" "}
                                 <span className="price">
-                                    {product.price.amount}
-                                    {product.price.currency}
+                                    {product.price}
+                                    MATIC
                                 </span>
                             </span>
                             <h6 className="title-name">
-                                #22 Portal , Info bellow
+                                Owner {getEllipsisTxt(product.owner, 4)}
                             </h6>
                             <div className="catagory-collection">
-                                <ProductCategory owner={product.owner} />
-                                <ProductCollection
+                                {/* <ProductCategory owner={product.owner} /> */}
+                                {/* <ProductCollection
                                     collection={product.collection}
-                                />
+                                /> */}
                             </div>
-                            <Button color="primary-alta" path="#">
-                                Unlockable content included
-                            </Button>
                             <div className="rn-bid-details">
                                 <BidTab
-                                    bids={product?.bids}
+                                    // bids={product?.bids}
                                     owner={product.owner}
-                                    properties={product?.properties}
-                                    tags={product?.tags}
-                                    history={product?.history}
-                                    tokenId={1}
+                                    properties={product?.attributes}
+                                    // tags={product?.tags}
+                                    // history={product?.history}
+                                    tokenId={product.tokenId}
                                 />
                                 <PlaceBet
-                                    highest_bid={product.highest_bid}
-                                    auction_date={product?.auction_date}
+                                // highest_bid={product.highest_bid}
+                                // auction_date={product?.auction_date}
                                 />
                             </div>
                         </div>

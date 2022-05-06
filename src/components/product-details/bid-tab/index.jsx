@@ -126,7 +126,7 @@ const BidTab = ({ className, tokenId, owner, properties, tags }) => {
                         <DetailsTabContent
                             owner={owner}
                             properties={properties}
-                            tags={tags}
+                            // tags={tags}
                         />
                     </TabPane>
                     <TabPane eventKey="nav-contact">

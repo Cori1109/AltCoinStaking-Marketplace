@@ -2,9 +2,10 @@ import { forwardRef } from "react";
 import PropTypes from "prop-types";
 import NiceSelect from "@ui/nice-select";
 import InputRange from "@ui/input-range";
+import Button from "@ui/button";
 
 const ProductFilter = forwardRef(
-    ({ slectHandler, sortHandler, priceHandler, inputs }, ref) => (
+    ({ slectHandler, priceHandler, startFilter }, ref) => (
         <div className="default-exp-wrapper default-exp-expand" ref={ref}>
             <div className="inner">
                 <div className="filter-select-option">
@@ -12,11 +13,11 @@ const ProductFilter = forwardRef(
                     <NiceSelect
                         options={[
                             { value: "all", text: "All" },
-                            { value: "starter", text: "Starter" },
-                            { value: "bronze", text: "Bronze" },
-                            { value: "silver", text: "Silver" },
-                            { value: "gold", text: "Gold" },
-                            { value: "platinum", text: "Platinum" },
+                            { value: "Starter", text: "Starter" },
+                            { value: "Bronze", text: "Bronze" },
+                            { value: "Silver", text: "Silver" },
+                            { value: "Gold", text: "Gold" },
+                            { value: "Platinum", text: "Platinum" },
                         ]}
                         placeholder="Select Level"
                         onChange={slectHandler}
@@ -44,12 +45,14 @@ const ProductFilter = forwardRef(
                     <h6 className="filter-leble">Price Range</h6>
                     <div className="price_filter s-filter clear">
                         <form action="#" method="GET">
-                            <InputRange
-                                values={inputs.price}
-                                onChange={priceHandler}
-                            />
+                            <InputRange onChange={priceHandler} />
                         </form>
                     </div>
+                </div>
+                <div className="filter-select-option">
+                    <Button variant="primary" onClick={startFilter}>
+                        Filter
+                    </Button>
                 </div>
             </div>
         </div>

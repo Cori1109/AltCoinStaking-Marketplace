@@ -20,7 +20,7 @@ const PlaceBet = ({ highest_bid, auction_date }) => {
                         <h6 className="title">Winning bit</h6>
                         <div className="top-seller-inner-one">
                             <div className="top-seller-wrapper">
-                                {highest_bid.bidder?.image?.src && (
+                                {/* {highest_bid.bidder?.image?.src && (
                                     <div className="thumbnail">
                                         <Anchor path={highest_bid.bidder.slug}>
                                             <Image
@@ -34,28 +34,28 @@ const PlaceBet = ({ highest_bid, auction_date }) => {
                                             />
                                         </Anchor>
                                     </div>
-                                )}
+                                )} */}
 
                                 <div className="top-seller-content">
                                     <span className="heighest-bid">
                                         Heighest bid{" "}
-                                        <Anchor path={highest_bid.bidder.slug}>
+                                        {/* <Anchor path={highest_bid.bidder.slug}>
                                             {highest_bid.bidder.name}
-                                        </Anchor>
+                                        </Anchor> */}
                                     </span>
                                     <span className="count-number">
-                                        {highest_bid.amount}
+                                        {/* {highest_bid.amount} */}
                                     </span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    {auction_date && (
+                    {/* {auction_date && (
                         <div className="bid-list left-bid">
                             <h6 className="title">Auction has ended</h6>
                             <Countdown className="mt--15" date={auction_date} />
                         </div>
-                    )}
+                    )} */}
                 </div>
                 <Button
                     color="primary-alta"

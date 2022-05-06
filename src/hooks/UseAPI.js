@@ -5,7 +5,7 @@ import web3 from "web3";
 
 const URL = `${process.env.POLYGONSCAN_API_URL}?module=logs&action=getLogs&fromBlock=0&toBlock=99999999&address=${process.env.MARKETPLACE_ADDRESS}&apikey=${process.env.POLYGONSCAN_API_KEY}`;
 
-export const GetPriceById = async (_tokenId) => {
+export const GetPriceById = async (_tokenId, setPrice) => {
     const getTopicTwo = (tokenId) => {
         let _toId = String(web3.utils.numberToHex(tokenId));
         _toId = _toId.slice(2, _toId.length);
@@ -20,16 +20,17 @@ export const GetPriceById = async (_tokenId) => {
     const _topic2 = getTopicTwo(_tokenId);
     const _URL = `${URL}&topic2=${_topic2}`;
     console.log("apiurl------", _URL);
-    axios.get(_URL).then(
+    await axios.get(_URL).then(
         (response) => {
             if (response.data.status != 1) {
-                toast.error(response.data.message);
+                return setPrice({ itemId: null, price: 0 });
             } else {
                 if (response.data.message == "OK") {
                     const result = response.data.result;
                     for (let i = result.length - 1; i >= 0; i--) {
                         let _event;
                         let _priceWei;
+                        let _itemId;
                         switch (result[i].topics[0]) {
                             case Constants.events.marketItemcreated: // MarketItemCreated
                                 _event = "List";
@@ -41,23 +42,27 @@ export const GetPriceById = async (_tokenId) => {
                                     );
                                 _priceWei = parseInt(_pString);
                                 _itemId = parseInt(result[i].topics[1]);
-                                return { itemId: _itemId, price: _priceWei };
+                                return setPrice({
+                                    itemId: _itemId,
+                                    price: _priceWei,
+                                });
                             case Constants.events.marketItemSold: // MarketItemSold
                                 _event = "Sale";
                                 _itemId = parseInt(result[i].topics[1]);
-                                return { itemId: _itemId, price: 0 };
+                                return setPrice({ itemId: _itemId, price: 0 });
                             case Constants.events.cancelList: // CancelList
                                 _event = "Cancel";
                                 _itemId = parseInt(result[i].topics[1]);
-                                return { itemId: _itemId, price: 0 };
+                                return setPrice({ itemId: _itemId, price: 0 });
 
                             default:
                                 break;
                         }
                     }
-                    return 0;
+                    return setPrice({ itemId: null, price: 0 });
                 }
             }
+            return setPrice({ itemId: null, price: 0 });
         },
         (error) => {
             toast.error("Can't connect to the Server!");

@@ -29,8 +29,13 @@ const ExploreProductArea = ({ className, space, data }) => {
     const [state, dispatch] = useReducer(reducer, {
         filterToggle: false,
         products: data.products || [],
-        inputs: { price: [0, 100] },
+        inputs: {
+            price: [0, 100],
+        },
     });
+
+    let checkPriceRange = true;
+
     const [products, setProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const numberOfPages = Math.ceil(data.products.length / POSTS_PER_PAGE);
@@ -50,54 +55,45 @@ const ExploreProductArea = ({ className, space, data }) => {
         dispatch({ type: "SET_INPUTS", payload: { [name]: value } });
     };
 
-    const priceHandler = (value) => {
-        dispatch({ type: "SET_INPUTS", payload: { price: value } });
-    };
-
-    const sortHandler = ({ value }) => {
-        const sortedProducts = state.products.sort((a, b) => {
-            if (value === "most-liked") {
-                return a.likeCount < b.likeCount ? 1 : -1;
-            }
-            return a.likeCount > b.likeCount ? 1 : -1;
+    const priceHandler = (minVal, maxVal) => {
+        dispatch({
+            type: "SET_INPUTS",
+            payload: { price: [minVal, maxVal] },
         });
-        dispatch({ type: "SET_PRODUCTS", payload: sortedProducts });
     };
 
     const filterMethods = (item, filterKey, value) => {
+        console.log("===== value:", value);
         if (value === "all") return false;
         let itemKey = filterKey;
-        if (filterKey === "category") {
-            itemKey = "categories";
-        }
-        if (filterKey === "price") {
-            return (
-                item[itemKey].price <= value[0] / 100 ||
-                item[itemKey].price >= value[1] / 100
-            );
-        }
-        if (Array.isArray(item[itemKey])) {
-            return !item[itemKey].includes(value);
-        }
-        if (filterKey === "collection") {
-            return item[itemKey].name !== value;
-        }
-        return item[itemKey] !== value;
-    };
-
-    const itemFilterHandler = useCallback(() => {
-        let filteredItems = [];
-
-        filteredItems = itemsToFilter.filter((item) => {
-            // eslint-disable-next-line no-restricted-syntax
-            for (const key in state.inputs) {
-                if (filterMethods(item, key, state.inputs[key])) return false;
+        if (filterKey === "level") {
+            itemKey = "attributes";
+            if (Array.isArray(item[itemKey])) {
+                return !item[itemKey][0]["value"].includes(value);
             }
-            return true;
-        });
-        dispatch({ type: "SET_PRODUCTS", payload: filteredItems });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [state.inputs]);
+        }
+
+        if (filterKey === "sale_type") {
+            itemKey = "price";
+            if (value == "not-for-sale") {
+                checkPriceRange = false;
+                return item[itemKey] == "0.000" ? false : true;
+            } else if (value == "open-for-offers") {
+                checkPriceRange = true;
+                return parseFloat(item[itemKey]) > 0 ? false : true;
+            }
+        }
+
+        if (filterKey === "price") {
+            itemKey = "price";
+            if (checkPriceRange)
+                return (
+                    parseFloat(item[itemKey]) <= value[0] ||
+                    parseFloat(item[itemKey]) >= value[1]
+                );
+            else return false;
+        }
+    };
 
     const creatorHandler = useCallback(() => {
         const start = (currentPage - 1) * POSTS_PER_PAGE;
@@ -108,9 +104,23 @@ const ExploreProductArea = ({ className, space, data }) => {
         creatorHandler();
     }, [currentPage, creatorHandler]);
 
+    const startFilter = () => {
+        let filteredItems = [];
+
+        filteredItems = itemsToFilter.filter((item) => {
+            checkPriceRange = true;
+            // eslint-disable-next-line no-restricted-syntax
+            for (let key in state.inputs) {
+                if (filterMethods(item, key, state.inputs[key])) return false;
+            }
+            return true;
+        });
+        dispatch({ type: "SET_PRODUCTS", payload: filteredItems });
+    };
+
     useEffect(() => {
-        itemFilterHandler();
-    }, [itemFilterHandler]);
+        setProducts(state.products);
+    }, [state.products]);
     return (
         <div
             className={clsx(
@@ -139,10 +149,9 @@ const ExploreProductArea = ({ className, space, data }) => {
 
                 <ProductFilter
                     ref={filterRef}
+                    startFilter={startFilter}
                     slectHandler={slectHandler}
-                    sortHandler={sortHandler}
                     priceHandler={priceHandler}
-                    inputs={state.inputs}
                 />
                 <div className="row g-5">
                     {products.length > 0 ? (

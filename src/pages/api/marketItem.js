@@ -4,6 +4,7 @@ import { config } from "@config/multicall";
 import { FetchMetadata } from "@hooks/FetchMetadata";
 import { GetTotalSupply, GetBaseURI } from "@hooks/GetBaseData";
 import { useIPFS } from "@hooks/useIPFS";
+import { GetPriceById } from "@hooks/UseAPI";
 
 export default async function handler(req, res) {
     const nft_address = process.env.NFT_ADDRESS;
@@ -97,17 +98,20 @@ export default async function handler(req, res) {
                 const attributes = metadata
                     ? resolveLink(metadata.attributes)
                     : null;
-                _marketItem.push({
-                    id: i,
-                    tokenId: tokenIds[i],
-                    name: name,
-                    owner: owners[i],
-                    nftAddress: nft_address,
-                    image: imageURI,
-                    price: null,
-                    // tokenURI: tokenURIs[i],
-                    tokenURI: `${baseTokenURI}${tokenIds[i]}`,
-                    attributes: attributes,
+                await GetPriceById(tokenIds[i], ({ itemId, price }) => {
+                    _marketItem.push({
+                        id: i,
+                        tokenId: tokenIds[i],
+                        name: name,
+                        owner: owners[i],
+                        nftAddress: nft_address,
+                        image: imageURI,
+                        price: parseFloat(price / Math.pow(10, 18)).toFixed(3),
+                        itemId: itemId,
+                        // tokenURI: tokenURIs[i],
+                        tokenURI: `${baseTokenURI}${tokenIds[i]}`,
+                        attributes: attributes,
+                    });
                 });
             }
             res.status(200).json({
