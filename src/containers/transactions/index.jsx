@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import clsx from "clsx";
 import SectionTitle from "@components/section-title/layout-02";
 import Anchor from "@ui/anchor";
-import { Table } from "react-bootstrap";
+import { Spinner, Table } from "react-bootstrap";
 import { SectionTitleType } from "@utils/types";
 import { getEllipsisTxt } from "@helpers/formatters";
 import { GetTransHistory } from "@hooks/UseAPI";
@@ -44,7 +44,7 @@ const TransactionArea = ({ className, space, id, data }) => {
             )}
             id={id}
         >
-            <div className="container" style={{ height: "59vh" }}>
+            <div className="container">
                 <div className="row mb--50 align-items-center">
                     <div className="col-lg-6 col-md-6 col-sm-6 col-12">
                         {data?.section_title && (
@@ -92,46 +92,62 @@ const TransactionArea = ({ className, space, id, data }) => {
                             </tr>
                         </thead>
                         <tbody>
-                            {transData?.map((historyData) => (
-                                <tr className="col-5 col-lg-4 col-md-6 col-sm-6 col-12">
-                                    <td style={{ color: "#fff" }}>
-                                        {historyData?.event}
-                                    </td>
-                                    <td>{historyData?.price}</td>
-                                    <td>
-                                        <a
-                                            href={`https://mumbai.polygonscan.com/address/${historyData?.from}`}
-                                            target="_blank"
-                                        >
-                                            {getEllipsisTxt(
-                                                historyData?.from,
-                                                4
-                                            )}
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a
-                                            href={`https://mumbai.polygonscan.com/address/${historyData?.to}`}
-                                            target="_blank"
-                                        >
-                                            {getEllipsisTxt(historyData?.to, 4)}
-                                        </a>
-                                    </td>
-                                    <td>{historyData?.tokenId}</td>
-                                    <td>
-                                        <a
-                                            href={`https://mumbai.polygonscan.com/tx/${historyData?.transaction}`}
-                                            target="_blank"
-                                        >
-                                            {getEllipsisTxt(
-                                                historyData?.transaction,
-                                                4
-                                            )}
-                                        </a>
-                                    </td>
-                                    <td>{historyData?.date}</td>
-                                </tr>
-                            ))}
+                            {transData.length ? (
+                                transData.map((historyData) => (
+                                    <tr className="col-5 col-lg-4 col-md-6 col-sm-6 col-12">
+                                        <td style={{ color: "#fff" }}>
+                                            {historyData?.event}
+                                        </td>
+                                        <td>{historyData?.price}</td>
+                                        <td>
+                                            <a
+                                                href={`https://mumbai.polygonscan.com/address/${historyData?.from}`}
+                                                target="_blank"
+                                            >
+                                                {getEllipsisTxt(
+                                                    historyData?.from,
+                                                    4
+                                                )}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a
+                                                href={`https://mumbai.polygonscan.com/address/${historyData?.to}`}
+                                                target="_blank"
+                                            >
+                                                {getEllipsisTxt(
+                                                    historyData?.to,
+                                                    4
+                                                )}
+                                            </a>
+                                        </td>
+                                        <td>{historyData?.tokenId}</td>
+                                        <td>
+                                            <a
+                                                href={`https://mumbai.polygonscan.com/tx/${historyData?.transaction}`}
+                                                target="_blank"
+                                            >
+                                                {getEllipsisTxt(
+                                                    historyData?.transaction,
+                                                    4
+                                                )}
+                                            </a>
+                                        </td>
+                                        <td>{historyData?.date}</td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <>
+                                    <Spinner
+                                        as="span"
+                                        animation="grow"
+                                        size="md"
+                                        role="status"
+                                        aria-hidden="true"
+                                    />
+                                    Fethcing Data...
+                                </>
+                            )}
                         </tbody>
                     </Table>
                     {data.fetchAll && (

@@ -22,6 +22,21 @@ export const GetBalAccount = async (account) => {
     return _balMatic;
 };
 
+export const GetMintedCnt = async (_stage) => {
+    const nftInst = new web3.eth.Contract(NFTABI, Constants.config.nft_address);
+    const _mintedCnt = await nftInst.methods
+        .mintedCnt(_stage)
+        .call()
+        .then((res) => {
+            return res;
+        })
+        .catch((err) => {
+            console.log("err", err);
+            return null;
+        });
+    return _mintedCnt;
+};
+
 export const GetTotalSupply = async () => {
     const nftInst = new web3.eth.Contract(NFTABI, Constants.config.nft_address);
     const totalSup = await nftInst.methods
