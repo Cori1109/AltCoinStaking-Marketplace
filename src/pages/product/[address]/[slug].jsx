@@ -24,14 +24,25 @@ const ProductDetails = ({ product }) => {
     );
 };
 
-// export async function getServerSideProps() {
-//     // Fetch data from external API
-//     const res = await fetch(`${process.env.BASE_API_URL}/api/marketItem`);
-//     const result = await res.json();
-//     const products = result.data;
+export async function getServerSideProps() {
+    // Fetch data from external API
+    // const { result, error } = useSWR("/api/marketItem", fetcher);
+    let result = await axios.get("/api/marketItem");
+    result = result.data;
+    console.log("===== result:", result);
+    result = JSON.parse(result);
+    const products = result.data;
 
-//     return { props: { products } };
-// }
+    const product = products.filter((prod) => {
+        return prod.tokenId == slug;
+    });
+    return {
+        props: {
+            className: "template-color-1",
+            product,
+        },
+    };
+}
 
 async function safeParseJSON(response) {
     const body = await response.text();
@@ -45,65 +56,65 @@ async function safeParseJSON(response) {
     }
 }
 
-export async function getStaticPaths() {
-    // var result = await axios.get(`${process.env.BASE_API_URL}/api/marketItem`, {
-    //     headers: {
-    //         Accept: "application/json, text/plain, */*",
-    //         "User-Agent": "*",
-    //     },
-    // });
-    // let result = await fetch(`${process.env.BASE_API_URL}/api/marketItem`).then(
-    //     safeParseJSON
-    // );
-    let result = await axios.get(`${process.env.BASE_API_URL}/api/marketItem`);
-    result = result.data;
-    console.log("===== result:", result);
-    result = JSON.parse(result);
-    const products = result.data;
+// export async function getStaticPaths() {
+//     // var result = await axios.get(`${process.env.BASE_API_URL}/api/marketItem`, {
+//     //     headers: {
+//     //         Accept: "application/json, text/plain, */*",
+//     //         "User-Agent": "*",
+//     //     },
+//     // });
+//     // let result = await fetch(`${process.env.BASE_API_URL}/api/marketItem`).then(
+//     //     safeParseJSON
+//     // );
+//     let result = await axios.get(`/api/marketItem`);
+//     result = result.data;
+//     console.log("===== result:", result);
+//     result = JSON.parse(result);
+//     const products = result.data;
 
-    // map through to return post paths
-    const paths = products.map((prod) => ({
-        params: {
-            address: prod.nftAddress,
-            slug: prod.tokenId.toString(),
-        },
-    }));
+//     // map through to return post paths
+//     const paths = products.map((prod) => ({
+//         params: {
+//             address: prod.nftAddress,
+//             slug: prod.tokenId.toString(),
+//         },
+//     }));
 
-    return {
-        paths,
-        fallback: false,
-    };
-}
+//     return {
+//         paths,
+//         fallback: false,
+//     };
+// }
 
-export async function getStaticProps({ params }) {
-    const { address, slug } = params;
+// export async function getStaticProps({ params }) {
+//     const { address, slug } = params;
 
-    // var result = await axios.get(`${process.env.BASE_API_URL}/api/marketItem`, {
-    //     headers: {
-    //         Accept: "application/json, text/plain, */*",
-    //         "User-Agent": "*",
-    //     },
-    // });
-    // let result = await fetch(`${process.env.BASE_API_URL}/api/marketItem`).then(
-    //     safeParseJSON
-    // );
-    let result = await axios.get(`${process.env.BASE_API_URL}/api/marketItem`);
-    result = result.data;
-    console.log("===== result:", result);
-    result = JSON.parse(result);
-    const products = result.data;
+//     // var result = await axios.get(`${process.env.BASE_API_URL}/api/marketItem`, {
+//     //     headers: {
+//     //         Accept: "application/json, text/plain, */*",
+//     //         "User-Agent": "*",
+//     //     },
+//     // });
+//     // let result = await fetch(`${process.env.BASE_API_URL}/api/marketItem`).then(
+//     //     safeParseJSON
+//     // );
+//     let result = await axios.get(`/api/marketItem`);
+//     result = result.data;
+//     console.log("===== result:", result);
+//     result = JSON.parse(result);
+//     const products = result.data;
 
-    const product = products.filter((prod) => {
-        return prod.tokenId == slug;
-    });
+//     const product = products.filter((prod) => {
+//         return prod.tokenId == slug;
+//     });
 
-    return {
-        props: {
-            className: "template-color-1",
-            product,
-        },
-    };
-}
+//     return {
+//         props: {
+//             className: "template-color-1",
+//             product,
+//         },
+//     };
+// }
 
 ProductDetails.propTypes = {
     products: PropTypes.shape({}),

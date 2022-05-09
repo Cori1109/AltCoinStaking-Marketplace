@@ -39,9 +39,7 @@ const Explore = () => {
         // let result = await fetch(
         //     `${process.env.BASE_API_URL}/api/marketItem`
         // ).then(safeParseJSON);
-        let result = await axios.get(
-            `${process.env.BASE_API_URL}/api/marketItem`
-        );
+        let result = await axios.get("/api/marketItem");
         result = result.data;
         console.log("===== result:", result);
         result = JSON.parse(result);
