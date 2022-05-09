@@ -3,7 +3,7 @@ import NFTABI from "src/abi/NFTABI";
 import MaticTokenABI from "src/abi/MaticTokenABI";
 import { Constants } from "src/config/constants";
 
-const web3 = new Web3(Constants.rpcURL[process.env.CHAIN_ID][2]);
+const web3 = new Web3(Constants.rpcURL[process.env.CHAIN_ID][1]);
 
 export const GetBalAccount = async (account) => {
     const tokenInst = new web3.eth.Contract(

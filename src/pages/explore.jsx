@@ -36,9 +36,14 @@ const Explore = () => {
         //         },
         //     }
         // );
-        let result = await fetch(
+        // let result = await fetch(
+        //     `${process.env.BASE_API_URL}/api/marketItem`
+        // ).then(safeParseJSON);
+        let result = await axios.get(
             `${process.env.BASE_API_URL}/api/marketItem`
-        ).then(safeParseJSON);
+        );
+        result = result.data;
+        console.log("===== result:", result);
         result = JSON.parse(result);
         // const products = result.data;
         setMarketItemData(result.data);
